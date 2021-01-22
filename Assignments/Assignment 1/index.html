@@ -24,10 +24,10 @@
 			<p>Favorite Number: {{ randomNumber() }}</p>
 			<div>
 				<!-- 5) Display some image you found via Google -->
-				<img v-bind:src="imgURL" />
+				<img :src="imgURL" />
 			</div>
 			<!-- 6) Prepopulate the input field with your name via the "value" attribute -->
-			<input type="text" v-bind:value="name" />
+			<input type="text" :value="name" />
 		</section>
 	</body>
 </html>
