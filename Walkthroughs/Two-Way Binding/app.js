@@ -5,6 +5,11 @@ const app = Vue.createApp({
 			name: "",
 			lastname: "",
 			// fullname: "",
+			handlers: {
+				// This dictionary allows us to handle event triggering of one single element (See html line 31)
+				mouseenter: this.theFunction,
+				click: this.theFunction,
+			}
 		};
 	},
 	watch: {
@@ -35,6 +40,9 @@ const app = Vue.createApp({
 		},
 	},
 	methods: {
+		theFunction() {
+			console.log('Function activated')
+		},
 		add(num) {
 			console.log("Added button pressed");
 			this.counter = this.counter + num;

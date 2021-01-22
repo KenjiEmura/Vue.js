@@ -28,7 +28,7 @@
 				@input="setName('Emura', $event)"
 			/> -->
 			<h3>Name</h3>
-			<input type="text" v-model="name" /></br>
+			<input v-on="handlers" type="text" v-model="name" /></br>
 			<input type="text" v-model="lastname" /></br>
 			<button @click="resetInput">Reset Input</button>
 			<p>Your name: {{ fullname }}</p>
