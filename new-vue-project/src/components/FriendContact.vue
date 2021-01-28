@@ -1,6 +1,6 @@
 <template>
     <li>
-        <h2>{{ name }} {{ friendIsFavorite ? "(Favorite)" : "" }}</h2>
+        <h2>{{ name }} {{ isFavorite ? "(Favorite)" : "" }}</h2>
         <button @click="toggleFavorite">Toggle Favorite</button>
         <button @click="toggleDetails">
             {{ detailsAreVisible ? "Hide" : "Show Details" }}
@@ -9,17 +9,25 @@
             <li><strong>Phone:</strong> {{ phoneNumber }}</li>
             <li><strong>Email:</strong> {{ emailAddress }}</li>
         </ul>
+        <button @click="$emit('delete-friend', id)">Delete</button>
     </li>
 </template>
 
 <script>
 export default {
+    // For props and emits validation, we have to use an object instead of an array
+
     // props: ["name", "phoneNumber", "emailAddress", "isFavorite"],
+    // Handling events validation:
     props: {
+        id: {
+            type: String,
+            required: true,
+        },
         name: {
             type: String,
             required: true,
-            default: 'NO NAME PASSED'
+            default: "NO NAME PASSED",
         },
         phoneNumber: {
             type: String,
@@ -38,18 +46,40 @@ export default {
             // }
         },
     },
+
+    // emits: ["toggle-favorite"],
+    // Handling events validation:
+    emits: {
+        "toggle-favorite": (id) => {
+            if (id) {
+                return true;
+            } else {
+                console.warn("ID is missing");
+                return false;
+            }
+        },
+        "delete-friend": (id) => {
+            if (id) {
+                return true;
+            } else {
+                console.warn("ID is missing");
+                return false;
+            }
+        },
+    },
+
     data() {
         return {
             detailsAreVisible: false,
-            friendIsFavorite: this.isFavorite,
         };
     },
+
     methods: {
         toggleDetails() {
             this.detailsAreVisible = !this.detailsAreVisible;
         },
         toggleFavorite() {
-            this.friendIsFavorite = !this.friendIsFavorite;
+            this.$emit("toggle-favorite", this.id);
         },
     },
 };
