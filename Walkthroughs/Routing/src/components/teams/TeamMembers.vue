@@ -20,6 +20,7 @@ export default {
     UserItem,
   },
   inject: ["teams", "users"],
+  props: ['teamId'],
   data() {
     return {
       teamName: "",
@@ -27,11 +28,10 @@ export default {
     };
   },
   methods: {
-    loadTeamMembers(route) {
+    loadTeamMembers(teamId) {
       // this.$router es para los links, .$route es para acceder a la query string
       // console.log(this.$route);
-      const teamId = route.params.teamId;
-      // if (!this.availableTeamRoutes.includes(teamId)) return;
+      if (!this.availableTeamRoutes.includes(teamId)) return this.$router.push("/teams");
       const selectedTeam = this.teams.find((team) => team.id === teamId);
       const members = selectedTeam.members;
       const selectedMembers = [];
@@ -44,7 +44,8 @@ export default {
     },
   },
   created() {
-    this.loadTeamMembers(this.$route);
+    this.loadTeamMembers(this.teamId);
+    // console.log(this.$route.query)
   },
   computed: {
     availableTeamRoutes() {
@@ -54,8 +55,8 @@ export default {
     },
   },
   watch: {
-    $route(newRoute) {
-      this.loadTeamMembers(newRoute);
+    teamId(newId) {
+      this.loadTeamMembers(newId);
     },
   },
 };
