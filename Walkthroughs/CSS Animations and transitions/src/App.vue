@@ -1,34 +1,133 @@
 <template>
+<div class="container">
+  <users-list></users-list>
+</div>
   <div class="container">
     <div class="block" :class="{ animate: animatedBlock }"></div>
     <button @click="animateBlock">Animate</button>
   </div>
   <div class="container">
-    <transition name="para">
-      <p v-if="paragraphIsVisible">This is only somethimes visible</p>
+    <transition
+      :css="false"
+      @before-enter="beforeEnter"
+      @before-leave="beforeLeave"
+      @enter="enter"
+      @after-enter="afterEnter"
+      @leave="leave"
+      @after-leave="afterLeave"
+      @enter-cancelled="enterCancelled"
+      @leave-cancelled="leaveCancelled"
+    >
+      <p v-show="paragraphIsVisible">This is only somethimes visible</p>
     </transition>
     <button @click="toggleParagraph">Toggle Paragraph</button>
   </div>
-    <base-modal @close="hideDialog" :open="dialogIsVisible">
-      <p>This is a test dialog!</p>
-
-      <button @click="hideDialog">Close it!</button>
-    </base-modal>
+  <div class="container">
+    <transition name="fade-button" mode="out-in">
+      <button @click="showUsers" v-if="!usersAreVisible">Show Users</button>
+      <button @click="hideUsers" v-else>Hide Users</button>
+    </transition>
+  </div>
+  <base-modal @close="hideDialog" :open="dialogIsVisible">
+    <p>This is a test dialog!</p>
+    <button @click="hideDialog">Close it!</button>
+  </base-modal>
   <div class="container">
     <button @click="showDialog">Show Dialog</button>
   </div>
 </template>
 
 <script>
+import UsersList from './components/UsersList.vue'
 export default {
+  components: {
+    UsersList
+  },
   data() {
     return {
       animatedBlock: false,
       paragraphIsVisible: false,
       dialogIsVisible: false,
+      usersAreVisible: false,
+      enterIntervall: null,
+      leaveIntervall: null,
     };
   },
   methods: {
+    enterCancelled(el) {
+      console.log("cancell-Enter");
+      console.log(el);
+      clearInterval(this.enterInterval);
+    },
+    leaveCancelled(el) {
+      console.log("cancell-Leave");
+      console.log(el);
+      clearInterval(this.leaveInterval);
+    },
+    beforeEnter(el) {
+      console.log("before-Enter");
+      console.log(el);
+      el.style.opacity = 0;
+    },
+    enter(el, done) {
+      console.log("Enter");
+      console.log(el);
+      let round = parseInt(parseFloat(el.style.opacity) / 0.01);
+      console.log(
+        "el.style.opacity / 0.01 = ",
+        parseInt(parseFloat(el.style.opacity) / 0.01)
+      );
+      let limit = 100 - round;
+      console.log('Enter starting round: ' + round)
+      console.log('Enter limit: ' + limit)
+      this.enterInterval = setInterval(() => {
+        el.style.opacity = round * 0.01;
+        round++;
+        if (round > limit) {
+          clearInterval(this.enterInterval);
+          done();
+        }
+      }, 20);
+    },
+    afterEnter(el) {
+      console.log("after-Enter");
+      console.log(el);
+    },
+    beforeLeave(el) {
+      console.log("before-Leave");
+      console.log(el);
+    },
+    leave(el, done) {
+      console.log("Leave");
+      console.log(el);
+      let round = 100 - parseInt(parseFloat(el.style.opacity) / 0.01);
+      console.log(
+        "el.style.opacity / 0.01 = ",
+        parseInt(parseFloat(el.style.opacity) / 0.01)
+      );
+      let limit = 100 - round;
+      console.log('Leave starting round: ' + round)
+      console.log('Leave limit: ' + limit)
+      this.leaveInterval = setInterval(() => {
+        el.style.opacity = 1 - round * 0.01;
+        round++;
+        if (round > limit) {
+          clearInterval(this.leaveInterval);
+          done();
+        }
+      }, 20);
+    },
+    afterLeave(el) {
+      console.log("after-Leave");
+      console.log(el);
+    },
+
+    showUsers() {
+      this.usersAreVisible = true;
+    },
+    hideUsers() {
+      this.usersAreVisible = false;
+    },
     animateBlock() {
       this.animatedBlock = true;
     },
@@ -51,33 +150,22 @@ export default {
   animation: slide-scale 0.3s ease-out forwards;
 }
 
-
-.para-enter-from {
-  /* opacity: 0;
-  transform: translateY(-30px); */
+.fade-button-enter-from,
+.fade-button-leave-to {
+  opacity: 0;
 }
 
-.para-enter-active {
-  animation: slide-scale 0.3s ease-out;
+.fade-button-enter-active {
+  transition: opacity 0.3s ease-out;
 }
 
-.para-enter-to {
-  /* opacity: 1;
-  transform: translateY(0); */
+.fade-button-leave-active {
+  transition: opacity 0.3s ease-in;
 }
 
-.para-leave-to {
-  /* opacity: 0;
-  transform: translateY(30px); */
-}
-
-.para-leave-active {
-  animation: slide-scale 0.3s ease-out;
-}
-
-.para-leave-from {
-  /* opacity: 1;
-  transform: translateY(0); */
+.fade-button-enter-to,
+.fade-button-leave-from {
+  opacity: 1;
 }
 
 @keyframes slide-scale {
