@@ -1,7 +1,7 @@
 <template>
   <header>
     <h1>
-      <router-link to="/">VueShop</router-link>
+      <router-link to="/">Kenji's Shop</router-link>
     </h1>
     <nav>
       <ul>
@@ -25,8 +25,21 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
+
 export default {
-  inject: ['isLoggedIn', 'login', 'logout', 'cart'],
+  computed: {
+    ...mapGetters({
+      isLoggedIn: 'userIsAuthenticated'
+    }),
+    ...mapGetters('cart', {
+      cart: 'cartTotals'
+    })
+  },
+  methods: {
+    ...mapActions(['login', 'logout'])
+  }
 };
 </script>
 

@@ -15,10 +15,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import ProductItem from '../components/products/ProductItem.vue';
 
 export default {
-  inject: ['products'],
+  computed:{
+    ...mapGetters('products', {
+      products: 'allProducts',
+    })
+  },
   components: {
     ProductItem,
   },
