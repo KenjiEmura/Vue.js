@@ -1,12 +1,12 @@
 <template>
   <the-header>
-    <h1>Hello world</h1>
+    Hello world
   </the-header>
   <router-view></router-view>
 </template>
 
 <script>
-import TheHeader from './components/nav/TheHeader.vue';
+import TheHeader from './components/layout/TheHeader.vue';
 
 // import { mapGetters } from 'vuex';
 
@@ -15,30 +15,25 @@ export default {
     TheHeader,
   },
   computed: {
-    // ...mapGetters({
-    //   isLoggedIn: 'userIsAuthenticated'
+    // ...mapGetters('products', {
+    //   products: 'allProducts',
     // })
   },
 };
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 * {
   box-sizing: border-box;
 }
 
-h1 {
-  color: red;
-  margin: 0;
-}
-
-
 html {
-  font-family: sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
   margin: 0;
-  height: 100vh;
 }
 </style>

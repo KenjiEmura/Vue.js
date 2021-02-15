@@ -1,8 +1,36 @@
 <template>
-  <ul>
-    <li>Coach 1</li>
-    <li>Coach 2</li>
-    <li>Coach 3</li>
-    <li>Coach 4</li>
-  </ul>
+  <section>
+    Filter
+  </section>
+  <section>
+    <div class="controls">
+      <button>Refresh</button>
+      <router-link to="/register">Register as Coach</router-link>
+    </div>
+    <ul v-if="hasCoaches">
+      <li v-for="coach in filteredCoaches" :key="coach.id">
+        {{ coach.firstName }}
+      </li>
+    </ul>
+    <h3 v-else>No coaches found</h3>
+  </section>
 </template>
+
+<script>
+import { mapGetters } from 'vuex';
+// import { mapActions } from 'vuex';
+
+export default {
+  computed: {
+    ...mapGetters('coaches', {
+      filteredCoaches: 'coaches',
+      hasCoaches: 'hasCoaches'
+    })
+  },
+  methods: {
+    // ...mapActions('coaches', {
+    //   xxxxxxxxx: 'xxxxxxx'
+    // })
+  }
+};
+</script>
