@@ -1,6 +1,7 @@
 <template>
   <section>
     Filter
+    <coach-filter></coach-filter>
   </section>
   <section>
     <base-card>
@@ -20,13 +21,15 @@
 
 <script>
 import CoachItem from '../../components/coaches/CoachItem.vue';
+import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
 import { mapGetters } from 'vuex';
 // import { mapActions } from 'vuex';
 
 export default {
   components: {
-    CoachItem
+    CoachItem,
+    CoachFilter,
   },
   computed: {
     ...mapGetters('coaches', {
