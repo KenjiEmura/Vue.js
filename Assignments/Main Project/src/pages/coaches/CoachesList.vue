@@ -6,7 +6,7 @@
     <base-card>
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
-        <base-button link to="/register">Register as Coach</base-button>
+        <base-button v-if="!isCoach" link to="/register">Register as Coach</base-button>
       </div>
       <ul v-if="hasCoaches">
         <li v-for="coach in filteredCoaches" :key="coach.id">
@@ -42,7 +42,8 @@ export default {
   computed: {
     ...mapGetters('coaches', {
       coaches: 'coaches',
-      hasCoaches: 'hasCoaches'
+      hasCoaches: 'hasCoaches',
+      isCoach: 'isCoach'
     }),
     filteredCoaches() {
       const coaches = this.coaches;
