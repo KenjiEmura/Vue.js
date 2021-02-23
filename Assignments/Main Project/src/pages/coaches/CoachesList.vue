@@ -5,7 +5,7 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline">Refresh</base-button>
+        <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
         <base-button v-if="!isCoach" link to="/register">Register as Coach</base-button>
       </div>
       <ul v-if="hasCoaches">
@@ -23,7 +23,7 @@ import CoachItem from '../../components/coaches/CoachItem.vue';
 import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
 import { mapGetters } from 'vuex';
-// import { mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -61,10 +61,13 @@ export default {
       });
     }
   },
+  created() {
+    this.loadCoaches();
+  },
   methods: {
-    // ...mapActions('coaches', {
-    //   xxxxxxxxx: 'xxxxxxx'
-    // })
+    ...mapActions('coaches', {
+      loadCoaches: 'loadCoaches'
+    }),
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     }
