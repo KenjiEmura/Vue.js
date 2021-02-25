@@ -1,6 +1,4 @@
 export default {
-
-  
   async registerCoach(context, data) {
     const userId = context.rootGetters.userId;
     const coachData = {
@@ -31,7 +29,6 @@ export default {
     });
   },
 
-
   async loadCoaches(context) {
     const response = await fetch(
       `https://vue-http-demo-60014-default-rtdb.firebaseio.com/coaches.json`
@@ -40,7 +37,8 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      // error
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
     }
 
     const coaches = [];
@@ -57,6 +55,6 @@ export default {
       coaches.push(coach);
     }
 
-    context.commit('setCoaches', coaches)
+    context.commit('setCoaches', coaches);
   }
 };
