@@ -1,31 +1,37 @@
 <template>
-  <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section>
-    <coach-filter @change-filter="setFilters"></coach-filter>
-  </section>
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button mode="outline" @click="loadCoachesCall(true)"
-          >Refresh</base-button
-        >
-        <base-button v-if="!isCoach && !isLoading" link to="/register"
-          >Register as Coach</base-button
-        >
-      </div>
-      <div v-if="isLoading">
-        <base-spinner></base-spinner>
-      </div>
-      <ul v-else-if="hasCoaches && !isLoading">
-        <li v-for="coach in filteredCoaches" :key="coach.id">
-          <coach-item v-bind="coach"></coach-item>
-        </li>
-      </ul>
-      <h3 v-else>No coaches found</h3>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog
+      :show="!!error"
+      title="An error occurred!"
+      @close="handleError"
+    >
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <coach-filter @change-filter="setFilters"></coach-filter>
+    </section>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button mode="outline" @click="loadCoachesCall(true)"
+            >Refresh</base-button
+          >
+          <base-button v-if="!isCoach && !isLoading" link to="/register"
+            >Register as Coach</base-button
+          >
+        </div>
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
+        <ul v-else-if="hasCoaches && !isLoading">
+          <li v-for="coach in filteredCoaches" :key="coach.id">
+            <coach-item v-bind="coach"></coach-item>
+          </li>
+        </ul>
+        <h3 v-else>No coaches found</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -83,10 +89,10 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    async loadCoachesCall( refresh = false) {
+    async loadCoachesCall(refresh = false) {
       this.isLoading = true;
       try {
-        await this.loadCoaches({forceRefresh: refresh});
+        await this.loadCoaches({ forceRefresh: refresh });
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
