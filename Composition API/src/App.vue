@@ -4,6 +4,7 @@
     <h3>{{ age }}</h3> -->
     <h2>{{ user.name }}</h2>
     <h3>{{ user.age }}</h3>
+    <button @click="setAge">Change Age</button>
   </section>
 </template>
 
@@ -28,12 +29,16 @@ export default {
 
     console.log(user)
 
-    setTimeout(() => {
-      // userName.value = 'Maria Antonieta de las flores';
-      // age.value = 250620;
-      user.name = 'El Cambiazo';
-      user.age = 'Infinito';
-    }, 2000);
+    // setTimeout(() => {
+    //   // userName.value = 'Maria Antonieta de las flores';
+    //   // age.value = 250620;
+    //   user.name = 'El Cambiazo';
+    //   user.age = 'Infinito';
+    // }, 2000);
+
+    function setNewAge() {
+      user.age = 32
+    }
 
     return {
       // userName,
@@ -46,6 +51,7 @@ export default {
       // age: user.age  // Don't use it like this with reactive()
       //-----
       user,
+      setAge: setNewAge
     };
   },
   // data() {
