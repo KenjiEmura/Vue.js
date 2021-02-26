@@ -10,11 +10,20 @@
 <script>
 import TheHeader from './components/layout/TheHeader.vue';
 
+import { mapActions } from 'vuex';
 // import { mapGetters } from 'vuex';
 
 export default {
+  created() {
+    this.tryAutoLogin()
+  },
   components: {
     TheHeader
+  },
+  methods: {
+    ...mapActions({
+      tryAutoLogin: 'tryAutoLogin'
+    })
   },
   computed: {
     // ...mapGetters('products', {
