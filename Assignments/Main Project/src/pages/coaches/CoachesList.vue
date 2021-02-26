@@ -16,7 +16,8 @@
           <base-button mode="outline" @click="loadCoachesCall(true)"
             >Refresh</base-button
           >
-          <base-button v-if="!isCoach && !isLoading" link to="/register"
+          <base-button link to="/auth?redirect=register" v-if="!isLoggedIn">Login to Register as Coach</base-button>
+          <base-button v-if="!isCoach && !isLoading && isLoggedIn" link to="/register"
             >Register as Coach</base-button
           >
         </div>
@@ -62,6 +63,9 @@ export default {
       coaches: 'coaches',
       hasCoaches: 'hasCoaches',
       isCoach: 'isCoach'
+    }),
+    ...mapGetters({ // Auth is not namespaced, so it's treated like the global vuex
+      isLoggedIn: 'isLoggedIn'
     }),
     filteredCoaches() {
       const coaches = this.coaches;

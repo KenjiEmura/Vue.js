@@ -4,14 +4,39 @@
       <h1><router-link to="/">Find a Coach</router-link></h1>
       <ul>
         <li><router-link to="/coaches">All Coaches</router-link></li>
-        <li><router-link to="/requests">Requests</router-link></li>
+        <li v-if="isLoggedIn">
+          <router-link to="/requests">Requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">Login</router-link>
+        </li>
+        <li v-if="isLoggedIn">
+          <base-button @click="logout">Logut</base-button>
+        </li>
       </ul>
     </nav>
   </header>
 </template>
 
-<style scoped>
+<script>
+import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
+export default {
+  computed: {
+    ...mapGetters({
+      isLoggedIn: 'isLoggedIn'
+    })
+  },
+  methods: {
+    ...mapActions({
+      logout: 'logout'
+    }),
+  }
+};
+</script>
+
+<style scoped>
 header {
   width: 100%;
   height: 5rem;
