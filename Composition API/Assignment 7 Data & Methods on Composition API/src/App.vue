@@ -31,6 +31,8 @@ export default {
       },
     });
 
+    console.log(reactiveGoal.myGoal) // The difference between handling objects with reactive() and ref() is NOT on the template
+
     const refGoal = ref({
       myGoal: "Ref Goal",
       isVisible: true,
@@ -39,7 +41,7 @@ export default {
       },
     });
 
-    console.log(refGoal.value.myGoal)
+    console.log(refGoal.value.myGoal) // The difference between handling objects with reactive() and ref() is NOT on the template
 
     return {
       myGoal,
