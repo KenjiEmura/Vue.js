@@ -2,8 +2,8 @@
   <section class="container">
     <!-- <h2>{{ userName }}</h2>
     <h3>{{ age }}</h3> -->
-    <h2>{{ uName }}</h2>
-    <h3>{{ user.age }}</h3>
+    <h2>{{ firstName + ' ' + lastName }}</h2>
+    <h3>{{ userAge }}</h3>
     <button @click="setAge">Change Age</button>
     <div>
       <input type="text" placeholder="First Name" v-model="firstName" />
@@ -13,50 +13,67 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { reactive } from "vue";
+import { ref } from "vue";
+// import { reactive } from "vue";
 import { computed } from "vue";
+import { watch } from "vue";
 
 export default {
   setup() {
     // const userName = ref('sdfasdfs Emura');
     // const age = ref(30);
+    // setTimeout(() => {
+    //   userName.value = 'Maria Antonieta de las flores';
+    //   age.value = 250620;
+    // }, 2000);
     //-----
-    // const user = ref({
+    // const user = ref({ // reactive() and ref() are only different inside the setup(), on the template they are the same
     //   name: 'Kenji Emura',
     //   age: 30,
     // });
+    // function setNewAge() {
+    //   user.age = 32;
+    // }
     //-----
-    const user = reactive({
-      name: "Kenji Emura",
-      age: 30,
-    });
+    // const user = reactive({ // reactive() and ref() are only different inside the setup(), on the template they are the same
+    //   name: "Kenji Emura",
+    //   age: 30,
+    // });
+    // setTimeout(() => {
+    //   user.name = "El Cambiazo";
+    //   user.age = "Infinito";
+    // }, 2000);
+    //-----
+    // const firstName = ref("");
+    // const lastName = ref("");
 
+    // const uName = computed(() => {
+    //   return firstName.value + " " + lastName.value;
+    // });
+
+    // function setFirstName(event) {
+    //   firstName.value = event.target.value;
+    // }
+
+    // function setLastName(event) {
+    //   lastName.value = event.target.value;
+    // }
+    //-----
     const firstName = ref("");
     const lastName = ref("");
-
+    const userAge = ref(31);
     const uName = computed(() => {
       return firstName.value + " " + lastName.value;
     });
-
-    function setFirstName(event) {
-      firstName.value = event.target.value;
-    }
-
-    function setLastName(event) {
-      lastName.value = event.target.value;
-    }
-
-    // setTimeout(() => {
-    //   // userName.value = 'Maria Antonieta de las flores';
-    //   // age.value = 250620;
-    //   user.name = 'El Cambiazo';
-    //   user.age = 'Infinito';
-    // }, 2000);
-
     function setNewAge() {
-      user.age = 32;
+      userAge.value = 35;
     }
+    watch([userAge, uName], (newValues, oldValues) => {
+      console.log("Old age: " + oldValues[0])
+      console.log("New age: " + newValues[0])
+      console.log("Old uName: " + oldValues[1])
+      console.log("New uName: " + newValues[1])
+    });
 
     return {
       // userName,
@@ -68,11 +85,17 @@ export default {
       // userName: user.name, // Don't use it like this with reactive()
       // age: user.age  // Don't use it like this with reactive()
       //-----
-      user,
+      // user,
+      // setAge: setNewAge,
+      //-----
+      // setFirstName,
+      // uName, // Computed property
+      // setLastName,
+      // firstName,
+      // lastName,
+      //-----
       setAge: setNewAge,
-      setFirstName,
-      setLastName,
-      uName,
+      userAge,
       firstName,
       lastName,
     };
