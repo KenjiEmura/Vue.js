@@ -31,7 +31,7 @@ export default {
       },
     });
 
-    console.log(reactiveGoal.myGoal) // The difference between handling objects with reactive() and ref() is NOT on the template
+    console.log(reactiveGoal.myGoal) // reactive() and ref() are only different inside the setup(), on the template they are the same
 
     const refGoal = ref({
       myGoal: "Ref Goal",
@@ -41,7 +41,7 @@ export default {
       },
     });
 
-    console.log(refGoal.value.myGoal) // The difference between handling objects with reactive() and ref() is NOT on the template
+    console.log(refGoal.value.myGoal) // reactive() and ref() are only different inside the setup(), on the template they are the same
 
     return {
       myGoal,
