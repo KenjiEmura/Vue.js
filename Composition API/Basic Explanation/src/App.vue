@@ -2,24 +2,26 @@
   <section class="container">
     <!-- <h2>{{ userName }}</h2>
     <h3>{{ age }}</h3> -->
-    <h2>{{ lastName }}</h2>
-    <h3>{{ userAge }}</h3>
-    <button @click="setAge">Change Age</button>
+    <user-data :first-name="firstName" :last-name="lastName" :age="userAge"></user-data>
+    <button @click="setNewAge">Change Age</button>
     <div>
-      <!-- <input type="text" placeholder="First Name" v-model="firstName" /> -->
-      <input type="text" placeholder="Last Name" ref="lastNameInput" />
-      <button @click="setLastName">Set Last Name</button>
+      <input type="text" placeholder="First Name" v-model="firstName" />
+      <input type="text" placeholder="Last Name" v-model="lastName" />
     </div>
   </section>
 </template>
 
 <script>
+import UserData from "./components/UserData.vue";
 import { ref } from "vue";
 // import { reactive } from "vue";
-// import { computed } from "vue";
+import { computed } from "vue";
 // import { watch } from "vue";
 
 export default {
+  components: {
+    UserData,
+  },
   setup() {
     // const userName = ref('sdfasdfs Emura');
     // const age = ref(30);
@@ -76,14 +78,26 @@ export default {
     //   console.log("New uName: " + newValues[1])
     // });
     //-----
+    // const lastName = ref("");
+    // const userAge = ref(31);
+
+    // const lastNameInput = ref(null);
+
+    // function setLastName() {
+      //   lastName.value = lastNameInput.value.value;
+    // }
+    //-----
+    const firstName = ref("");
     const lastName = ref("");
     const userAge = ref(31);
 
-    const lastNameInput = ref(null);
-
-    function setLastName() {
-      lastName.value = lastNameInput.value.value;
+    function setNewAge() {
+      userAge.value = 9999;
     }
+
+    const uName = computed(() => {
+      return firstName.value + " " + lastName.value;
+    });
 
     return {
       // userName,
@@ -110,10 +124,16 @@ export default {
       // firstName,
       // lastName,
       //-----
+      // lastName,
+      // userAge,
+      // setLastName,
+      // lastNameInput,
+      //-----
+      firstName,
       lastName,
+      uName,
       userAge,
-      setLastName,
-      lastNameInput
+      setNewAge
     };
   },
   // data() {
