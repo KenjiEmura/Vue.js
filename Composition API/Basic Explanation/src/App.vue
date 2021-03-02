@@ -2,7 +2,7 @@
   <section class="container">
     <!-- <h2>{{ userName }}</h2>
     <h3>{{ age }}</h3> -->
-    <user-data :first-name="firstName" :last-name="lastName" :age="userAge"></user-data>
+    <user-data :first-name="firstName" :last-name="lastName" :age="userAge" :class="{'hello':true}"></user-data>
     <button @click="setNewAge">Change Age</button>
     <div>
       <input type="text" placeholder="First Name" v-model="firstName" />
