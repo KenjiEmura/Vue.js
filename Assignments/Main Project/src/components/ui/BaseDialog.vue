@@ -1,6 +1,8 @@
 <template>
   <teleport to="body">
-    <div v-if="show" @click="tryClose" class="backdrop"></div>
+    <transition name="background">
+      <div v-if="show" @click="tryClose" class="backdrop"></div>
+    </transition>
     <transition name="dialog">
       <dialog open v-if="show">
         <header>
@@ -105,23 +107,29 @@ menu {
   }
 }
 
-.dialog-enter-from, .dialog-leave-to {
+.dialog-enter-from,
+.dialog-leave-to,
+.background-enter-from,
+.background-leave-to {
   opacity: 0;
   transform: scale(0.8);
 }
 
-.dialog-enter-active {
-  transition: all 0.2s ease-out;
+.dialog-enter-active,
+.background-enter-active {
+  transition: all 2s ease-out;
 }
 
-.dialog-leave-active {
-  transition: all 0.2s ease-in;
+.dialog-leave-active,
+.background-leave-active {
+  transition: all 2s ease-in;
 }
 
-
-.dialog-enter-to, .dialog-leave-from {
+.dialog-enter-to,
+.dialog-leave-from,
+.background-enter-to,
+.background-leave-from {
   opacity: 1;
   transform: scale(1);
 }
-
 </style>
