@@ -6,7 +6,7 @@
         <h3>{{ product.title }}</h3>
         <h4>${{ product.price }}</h4>
         <p>{{ product.description }}</p>
-        <router-link :to="url(product)">View Details</router-link>
+        <router-link :to="url(product.id)">View Details</router-link>
       </li>
     </ul>
   </section>
@@ -19,8 +19,8 @@ export default {
   setup() {
     const loadedProducts = inject('products');
 
-    function url(product) {
-      return '/products/' + product.id;
+    function url(productId) {
+      return '/products/' + productId;
     }
 
     return { products: loadedProducts, url };
