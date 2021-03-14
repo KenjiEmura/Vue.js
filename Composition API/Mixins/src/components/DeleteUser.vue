@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       alertTitle: 'Delte User?',
-      alertIsVisible: true,
+      // alertIsVisible: true,  // Overrides the mixins configurations
     }
   },
   mixins: [alertMixin]
