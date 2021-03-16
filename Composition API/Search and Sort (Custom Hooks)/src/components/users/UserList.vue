@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, toRefs } from 'vue';
 import useSearch from '../../hooks/search.js';
 
 import UserItem from './UserItem.vue';
@@ -64,8 +64,11 @@ export default {
     // function updateSearch(val) {
     //   enteredSearchTerm.value = val;
     // }
+
+    const { users } = toRefs(props)
+
     const { enteredSearchTerm, availableItems, updateSearch } = useSearch(
-      props.users,
+      users,
       'fullName'
     );
 
